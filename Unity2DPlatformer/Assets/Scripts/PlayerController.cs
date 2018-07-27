@@ -47,4 +47,9 @@ public class PlayerController : MonoBehaviour {
 		myAnimator.SetFloat("Speed", Mathf.Abs(myRigidbody.velocity.x));
 		myAnimator.SetBool("Grounded", isGrounded);
 	}
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+
+    }
 }
