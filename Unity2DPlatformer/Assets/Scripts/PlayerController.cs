@@ -8,20 +8,25 @@ public class PlayerController : MonoBehaviour {
 	public float jumpSpeed;
 
 	private Rigidbody2D myRigidbody;
+    private Animator myAnimator;
 
-	public Transform groundCheck;
+    public Transform groundCheck;
 	public float groundCheckRadius;
 	public LayerMask whatIsGround;
+    public Vector3 respawnPosition;
+    public LevelManager theLevelManager; 
 
 	public int doubleJumpCount;
 	public bool isGrounded;
 
-	private Animator myAnimator;
 
 	// Use this for initialization
 	void Start () {
 		myRigidbody = GetComponent<Rigidbody2D>();
 		myAnimator = GetComponent<Animator>();
+
+        respawnPosition = transform.position;
+        theLevelManager = FindObjectOfType<LevelManager>();
 
 	}
 	
@@ -48,8 +53,19 @@ public class PlayerController : MonoBehaviour {
 		myAnimator.SetBool("Grounded", isGrounded);
 	}
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if(other.tag == "KillPlane")
+		{
+            //gameObject.SetActive(false);
+            //transform.position = respawnPosition;
 
-    }
+            theLevelManager.Respawn();
+		}
+   
+        if(other.tag == "Checkpoint")
+        {
+            respawnPosition = other.transform.position;
+        }
+	}
 }
